@@ -11,10 +11,10 @@
 #ifdef IS_TEST_NET
 #define DPN_BLOCKCHAIN_VERSION              ( version(0, 22, 0) )
 
-#define DPN_INIT_PRIVATE_KEY                (fc::ecc::private_key::regenerate(fc::sha256::hash(std::string("init_key"))))
+#define DPN_INIT_PRIVATE_KEY                (fc::ecc::private_key::regenerate(fc::sha256::hash(std::string("secretkey"))))
 #define DPN_INIT_PUBLIC_KEY_STR             (std::string( dpn::protocol::public_key_type(DPN_INIT_PRIVATE_KEY.get_public_key()) ))
-#define DPN_CHAIN_ID (fc::sha256::hash("testnet"))
-#define DPN_ADDRESS_PREFIX                  "TST"
+#define DPN_CHAIN_ID (fc::sha256::hash("dappnet"))
+#define DPN_ADDRESS_PREFIX                  "DPN"
 
 #define DPN_GENESIS_TIME                    (fc::time_point_sec(1451606400))
 #define DPN_MINING_TIME                     (fc::time_point_sec(1451606400))
@@ -46,9 +46,9 @@
 
 #define DPN_BLOCKCHAIN_VERSION              ( version(0, 21, 0) )
 
-#define DPN_INIT_PUBLIC_KEY_STR             "STM8GC13uCZbP44HzMLV6zPZGwVQ8Nt4Kji8PapsPiNq1BK153XTX"
-#define DPN_CHAIN_ID fc::sha256()
-#define DPN_ADDRESS_PREFIX                  "STM"
+#define DPN_INIT_PUBLIC_KEY_STR             "DPN8GC13uCZbP44HzMLV6zPZGwVQ8Nt4Kji8PapsPiNq1BK153XTX"
+#define DPN_CHAIN_ID (fc::sha256::hash("dappnet"))
+#define DPN_ADDRESS_PREFIX                  "DPN"
 
 #define DPN_GENESIS_TIME                    (fc::time_point_sec(1458835200))
 #define DPN_MINING_TIME                     (fc::time_point_sec(1458838800))
@@ -83,7 +83,7 @@
 #define DPN_100_PERCENT                     10000
 #define DPN_1_PERCENT                       (DPN_100_PERCENT/100)
 
-#define DPN_BLOCK_INTERVAL                  3
+#define DPN_BLOCK_INTERVAL                  1
 #define DPN_BLOCKS_PER_YEAR                 (365*24*60*60/DPN_BLOCK_INTERVAL)
 #define DPN_BLOCKS_PER_DAY                  (24*60*60/DPN_BLOCK_INTERVAL)
 #define DPN_START_VESTING_BLOCK             (DPN_BLOCKS_PER_DAY * 7)
@@ -93,17 +93,17 @@
 #define DPN_NUM_INIT_MINERS                 1
 #define DPN_INIT_TIME                       (fc::time_point_sec());
 
-#define DPN_MAX_WITNESSES                   21
+#define DPN_MAX_WITNESSES                   63
 
-#define DPN_MAX_VOTED_WITNESSES_HF0         19
-#define DPN_MAX_MINER_WITNESSES_HF0         1
-#define DPN_MAX_RUNNER_WITNESSES_HF0        1
+#define DPN_MAX_VOTED_WITNESSES_HF0         62
+#define DPN_MAX_MINER_WITNESSES_HF0         0
+#define DPN_MAX_RUNNER_WITNESSES_HF0        3
 
-#define DPN_MAX_VOTED_WITNESSES_HF17        20
+#define DPN_MAX_VOTED_WITNESSES_HF17        62
 #define DPN_MAX_MINER_WITNESSES_HF17        0
 #define DPN_MAX_RUNNER_WITNESSES_HF17       1
 
-#define DPN_HARDFORK_REQUIRED_WITNESSES     17 // 17 of the 21 dpos witnesses (20 elected and 1 virtual time) required for hardfork. This guarantees 75% participation on all subsequent rounds.
+#define DPN_HARDFORK_REQUIRED_WITNESSES     47 // 17 of the 21 dpos witnesses (20 elected and 1 virtual time) required for hardfork. This guarantees 75% participation on all subsequent rounds.
 #define DPN_MAX_TIME_UNTIL_EXPIRATION       (60*60) // seconds,  aka: 1 hour
 #define DPN_MAX_MEMO_SIZE                   2048
 #define DPN_MAX_PROXY_RECURSION_DEPTH       4
@@ -117,7 +117,6 @@
 #define DPN_MAX_VOTE_CHANGES                5
 #define DPN_REVERSE_AUCTION_WINDOW_SECONDS_HF6 (60*30) /// 30 minutes
 #define DPN_REVERSE_AUCTION_WINDOW_SECONDS_HF20 (60*15) /// 15 minutes
-#define DPN_REVERSE_AUCTION_WINDOW_SECONDS_HF21 (60)
 #define DPN_MIN_VOTE_INTERVAL_SEC           3
 #define DPN_VOTE_DUST_THRESHOLD             (50000000)
 #define DPN_DOWNVOTE_POOL_PERCENT_HF21      (25*DPN_1_PERCENT)
@@ -129,7 +128,7 @@
 #define DPN_POST_AVERAGE_WINDOW             (60*60*24u) // 1 day
 #define DPN_POST_WEIGHT_CONSTANT            (uint64_t(4*DPN_100_PERCENT) * (4*DPN_100_PERCENT))// (4*DPN_100_PERCENT) -> 2 posts per 1 days, average 1 every 12 hours
 
-#define DPN_MAX_ACCOUNT_WITNESS_VOTES       30
+#define DPN_MAX_ACCOUNT_WITNESS_VOTES       15
 
 #define DPN_DEFAULT_DBD_INTEREST_RATE       (10*DPN_1_PERCENT) ///< 10% APR
 
@@ -140,7 +139,7 @@
 #define DPN_VESTING_FUND_PERCENT_HF16       (15*DPN_1_PERCENT) //15% of inflation, 1.425% inflation
 #define DPN_PROPOSAL_FUND_PERCENT_HF0       (0)
 
-#define DPN_CONTENT_REWARD_PERCENT_HF21     (65*DPN_1_PERCENT)
+#define DPN_CONTENT_REWARD_PERCENT_HF21     (0*DPN_1_PERCENT)
 #define DPN_PROPOSAL_FUND_PERCENT_HF21      (10*DPN_1_PERCENT)
 
 #define DPN_HF21_CONVERGENT_LINEAR_RECENT_CLAIMS (fc::uint128_t(0,503600561838938636ull))
@@ -169,7 +168,7 @@
 #define DPN_MIN_LIQUIDITY_REWARD_PERIOD_SEC (fc::seconds(60)) // 1 minute required on books to receive volume
 #define DPN_LIQUIDITY_REWARD_PERIOD_SEC     (60*60)
 #define DPN_LIQUIDITY_REWARD_BLOCKS         (DPN_LIQUIDITY_REWARD_PERIOD_SEC/DPN_BLOCK_INTERVAL)
-#define DPN_MIN_LIQUIDITY_REWARD            (asset( 1000*DPN_LIQUIDITY_REWARD_BLOCKS, DPN_SYMBOL )) // Minumum reward to be paid out to liquidity providers
+#define DPN_MIN_LIQUIDITY_REWARD            (asset( 7200*DPN_LIQUIDITY_REWARD_BLOCKS, DPN_SYMBOL )) // Minumum reward to be paid out to liquidity providers
 #define DPN_MIN_CONTENT_REWARD              DPN_MINING_REWARD
 #define DPN_MIN_CURATE_REWARD               DPN_MINING_REWARD
 #define DPN_MIN_PRODUCER_REWARD             DPN_MINING_REWARD
@@ -362,4 +361,3 @@
 #define SMT_DEFAULT_PERCENT_CURATION_REWARDS    (25 * DPN_1_PERCENT)
 
 #endif /// DPN_ENABLE_SMT
-
